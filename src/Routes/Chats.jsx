@@ -111,18 +111,13 @@ class Chats extends Component {
         //Progress Bar
         this.setState({image:true})
         let a = document.getElementById("progress") ;
-        console.log(a)
         // Get File
         let file = e.target.files[0];
-        console.log(file)
         // Create A Storage Ref
         let storage = firebase.storage().ref().child( 'try_out/' + file.name );
-        console.log(storage)
         // Upload File
         let task = storage.put(file)
-        console.log(task)
         let that = this;      
-        console.log(that)
         // Update Progress Bar
         task.on('state_changed',
           // Handle Progress
@@ -130,7 +125,6 @@ class Chats extends Component {
             let percentage = ( snapshot.bytesTransferred /
             snapshot.totalBytes ) * 100 ;
             that.setState({value:percentage})
-            console.log(percentage)
           },
           // Handle Error
           function error(err) {
@@ -138,7 +132,6 @@ class Chats extends Component {
           // After Complete
           function complete() {
             storage.getDownloadURL().then(function(urlm) {
-              console.log(urlm)
               firebase.database().ref('User/'+that.state.current.Uid).child(that.state.id).push({message : urlm,
                 Name : that.state.current.Name , time : that.time , date : that.date , image : that.state.image })
               firebase.database().ref('User/'+that.state.id).child(that.state.current.Uid).push({message : urlm,
